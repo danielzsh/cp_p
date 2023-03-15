@@ -1,0 +1,1 @@
+g++ -std=c++17 src/main.cpp src/Lexer.cpp -o ./run

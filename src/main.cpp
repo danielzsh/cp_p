@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "Lexer.h"
+#include "Compiler.h"
 std::string readFile(const std::string& filename)
 {
     std::ifstream source(filename);
@@ -13,10 +13,12 @@ int main(int argc, char** argv) {
         return 1;
     }
     if (argc > 1) input = readFile(argv[1]);
-    Lexer::Lexer lexer(input);
+    // Lexer::Lexer lexer(input);
+    Compiler::Compiler compiler(input);
     try {
-        auto tokens = lexer.lex();
-        for (auto token : tokens) std::cout << token << std::endl;
+        std::cout << compiler.compile();
+        // auto tokens = lexer.lex();
+        // for (auto token : tokens) std::cout << token << std::endl;
     } catch(std::string e) {
         std::cout << e << std::endl;
         return 1;

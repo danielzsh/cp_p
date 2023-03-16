@@ -1,41 +1,41 @@
 #include "Lexer.h"
 #include <iostream>
-std::ostream &operator<<(std::ostream &os, Token const &token) {
-    std::string value = token.value;
-    if (value == "\n") value = "\\n";
-    if (value == "\t") value = "\\t"; 
-    return os << token.type << " " << value;
-}
 namespace Lexer {
+    std::ostream &operator<<(std::ostream &os, Token const &token) {
+        std::string value = token.value;
+        if (value == "\n") value = "\\n";
+        if (value == "\t") value = "\\t"; 
+        return os << token.type << " " << value;
+    }
     Lexer::Lexer(std::string input) {
         this->input = input;
-        for (int i = 0; i < keywords.size(); i++) {
-            kwd_index[keywords[i]] = i;
-        }
     }
     std::vector<Token> Lexer::lex() {
         Token curtok;
         std::vector<Token> res;
-        while ((curtok = gettok()).type != tok_eof) res.push_back(curtok);
+        while ((curtok = get_tok()).type != tok_eof) res.push_back(curtok);
         return res;
     }
-    char Lexer::nextchar() {
+    char Lexer::next_char() {
         if (++pos >= input.size()) return EOF;
         return input[pos];
     }
-    Token Lexer::gettok() {
+    Token Lexer::get_tok() {
         while (std::isspace(c)) {
             if (c == '\n') {
-                return c = nextchar(), Token(tok_whitespace, "\n");
+                return c = next_char(), Token(tok_whitespace, "\n");
             } else if (c == '\t') {
-                return c = nextchar(), Token(tok_whitespace, "\t");
+                return c = next_char(), Token(tok_whitespace, "\t");
             }
-            c = nextchar();
+            c = next_char();
         }
         if (std::isalpha(c)) {
             std::string str(1, c);
-            while (std::isalnum(c = nextchar())) {
+            while (std::isalnum(c = next_char())) {
                 str += c;
+            }
+            for (int i = 0; i < types.size(); i++) {
+                if (str == types[i]) return Token(tok_type, str);
             }
             for (int i = 0; i < keywords.size(); i++) {
                 if (str == keywords[i]) return Token(tok_keyword, str);
@@ -48,30 +48,31 @@ namespace Lexer {
             do {
                 if (c == '.') type = tok_double;
                 str += c;
-                c = nextchar();
+                c = next_char();
             } while (std::isdigit(c) || c == '.');
             return Token(type, str);
         }
         if (c == '\'') {
             std::string str = "";
-            while ((c = nextchar()) != '\'') {
+            while ((c = next_char()) != '\'') {
                 str += c;
             }
-            c = nextchar();
+            c = next_char();
             return Token(tok_string, str);
         }
         if (c == '#') {
             do {
-                c = nextchar();
+                c = next_char();
             } while (c != EOF && c != '\n' && c != '\r');
             if (c != EOF) {
-                return gettok();
+                return get_tok();
             }
         }
         if (c == EOF) return Token(tok_eof, "");
         char thischar = c;
-        c = nextchar();
-        if (thischar == '-' && c == '>') return c = nextchar(), Token(tok_symbol, "->");
+        c = next_char();
+        if (thischar == '-' && c == '>') return c = next_char(), Token(tok_symbol, "->");
+        if (thischar == '(' && c == ')') return c = next_char(), Token(tok_symbol, "()");
         return Token(tok_char, std::string(1, thischar));
     }
 } // Lexer

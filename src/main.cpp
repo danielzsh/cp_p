@@ -7,6 +7,7 @@ std::string readFile(const std::string& filename)
     return std::string((std::istreambuf_iterator<char>(source)), std::istreambuf_iterator<char>());
 }
 int main(int argc, char** argv) {
+    std::freopen("output.txt", "w", stdout);
     std::string input;
     if (argc <= 1) {
         std::cout << "provide path to source file\n";

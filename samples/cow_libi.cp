@@ -1,18 +1,19 @@
-int -> long long
+define int long long
+define SQUARE(x) ((x) * (x))
 struct grazing:
 	int x, y, t
 
 main():
-	input: g n (ints)
+	input: int g n
 	[]cmp(grazing a, grazing b):
 		return a.t < b.t
 	set<grazing, cmp> grazings
 	for i in [0, g):
-		input: x y t (int)
+		input: int x y t
 		grazings.insert(grazing(x, y, t))
 	int ans = 0
 	for i in [0, n):
-		input x y t (int)
+		input: int x y t
 		auto nxt = grazings.lower_bound(grazing(MIN, MIN, t))
 		bool inncoent = false
 		if nxt != grazings.end():

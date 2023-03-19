@@ -71,8 +71,6 @@ namespace Lexer {
         if (c == EOF) return Token(tok_eof, "");
         char thischar = c;
         c = next_char();
-        if (thischar == '-' && c == '>') return c = next_char(), Token(tok_symbol, "->");
-        if (thischar == '(' && c == ')') return c = next_char(), Token(tok_symbol, "()");
         return Token(tok_char, std::string(1, thischar));
     }
 } // Lexer

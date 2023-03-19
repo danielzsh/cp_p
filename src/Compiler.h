@@ -5,8 +5,11 @@ namespace Compiler {
     enum SymbolType {
         sym_type, // int, long long, etc.
         sym_keyword,
-        sym_symbol, // ->, ()
         sym_whitespace,
+        sym_identifier,
+        sym_func,
+        sym_func_call,
+        sym_char
     };
     class Symbol {
     public:
@@ -20,7 +23,7 @@ namespace Compiler {
     class Compiler {
     private:
         std::vector<Lexer::Token> tokens;
-        std::string header = "#include <bits/stdc++.h>\n";
+        std::string header = "#include <bits/stdc++.h>\nusing namespace std;\n";
         std::string body;
         std::string compile_main(int pos);
         std::string compile_macro(int& pos);

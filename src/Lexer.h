@@ -11,7 +11,6 @@ namespace Lexer {
         tok_char,
         tok_keyword,
         tok_whitespace,
-        tok_symbol,
         tok_type
     };
     class Token {
@@ -29,7 +28,7 @@ namespace Lexer {
         std::string input = "";
         int pos = -1;
         std::vector<std::string> keywords =
-                {"input", "struct", "return"};
+                {"input", "struct", "return", "define"};
         std::vector<std::string> types =
                 {"int", "long"};
         int line = 1;

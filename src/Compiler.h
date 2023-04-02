@@ -9,7 +9,8 @@ namespace Compiler {
         sym_identifier,
         sym_func,
         sym_func_call,
-        sym_char
+        sym_char,
+        sym_operator
     };
     class Symbol {
     public:

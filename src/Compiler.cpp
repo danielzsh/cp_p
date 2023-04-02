@@ -21,11 +21,13 @@ namespace Compiler {
     }
     std::string Compiler::compile_macro(int& pos) {
         Symbol cur = next_symbol(pos);
-        std::string statement = "#define";
+        std::string statement = "#define " + (cur = next_symbol(pos += cur.tok_count)).value + " ";
+        std::cout << next_symbol(pos).value << " " << next_symbol(pos).tok_count << std::endl;
         while (cur.value != "\n") {
-            std::cout << pos << " " << cur.value << " " << cur.tok_count << std::endl;
             cur = next_symbol(pos += cur.tok_count);
-            statement += " " + cur.value;
+            std::cout << pos << " " << cur.value << " " << cur.tok_count << std::endl;
+            if (cur.type == sym_operator) statement += " " + cur.value + " ";
+            else statement += cur.value;
         }
         std::cout << std::endl;
         return statement;
@@ -67,6 +69,11 @@ namespace Compiler {
             }
             return Symbol(tok_count + 1, func_type, func + ")");
         }
-        if (tokens[pos].type == Lexer::tok_char) return Symbol(1, sym_char, tokens[pos].value);
+        if (tokens[pos].type == Lexer::tok_char) {
+            return Symbol(1, sym_char, tokens[pos].value);
+        }
+        if (tokens[pos].type == Lexer::tok_operator) {
+            return Symbol(1, sym_operator, tokens[pos].value);
+        }
     }
 }

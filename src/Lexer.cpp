@@ -70,7 +70,13 @@ namespace Lexer {
         }
         if (c == EOF) return Token(tok_eof, "");
         char thischar = c;
+        TokenType tok_type = tok_char;
+        if (c == '+' || c == '-' || c == '/' || c == '*') {
+            std::cout << "operator found" << std::endl;
+            tok_type = tok_operator;
+        }
         c = next_char();
-        return Token(tok_char, std::string(1, thischar));
+        // TODO: account for the use of * in pointers
+        return Token(tok_type, std::string(1, thischar));
     }
 } // Lexer

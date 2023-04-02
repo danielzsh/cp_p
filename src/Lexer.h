@@ -8,6 +8,7 @@ namespace Lexer {
         tok_double,
         tok_eof,
         tok_string,
+        tok_operator,
         tok_char,
         tok_keyword,
         tok_whitespace,

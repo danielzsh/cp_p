@@ -72,7 +72,6 @@ namespace Lexer {
         char thischar = c;
         TokenType tok_type = tok_char;
         if (c == '+' || c == '-' || c == '/' || c == '*') {
-            std::cout << "operator found" << std::endl;
             tok_type = tok_operator;
         }
         c = next_char();

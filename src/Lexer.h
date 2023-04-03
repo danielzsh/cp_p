@@ -14,12 +14,10 @@ namespace Lexer {
         tok_whitespace,
         tok_type
     };
-    class Token {
-    public:
+    
+    struct Token {
         TokenType type;
         std::string value;
-        Token() {}
-        Token(TokenType type, std::string value) : type(type), value(value) {}
     };
     std::ostream &operator<<(std::ostream &os, Token const &token);
     class Lexer {

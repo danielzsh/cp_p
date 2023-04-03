@@ -23,9 +23,9 @@ namespace Lexer {
     Token Lexer::get_tok() {
         while (std::isspace(c)) {
             if (c == '\n') {
-                return c = next_char(), Token(tok_whitespace, "\n");
+                return c = next_char(), Token{tok_whitespace, "\n"};
             } else if (c == '\t') {
-                return c = next_char(), Token(tok_whitespace, "\t");
+                return c = next_char(), Token{tok_whitespace, "\t"};
             }
             c = next_char();
         }
@@ -35,12 +35,12 @@ namespace Lexer {
                 str += c;
             }
             for (int i = 0; i < types.size(); i++) {
-                if (str == types[i]) return Token(tok_type, str);
+                if (str == types[i]) return Token{tok_type, str};
             }
             for (int i = 0; i < keywords.size(); i++) {
-                if (str == keywords[i]) return Token(tok_keyword, str);
+                if (str == keywords[i]) return Token{tok_keyword, str};
             }
-            return Token(tok_identifier, str);
+            return Token{tok_identifier, str};
         }
         if (std::isdigit(c) || c == '.') {
             std::string str;
@@ -50,7 +50,7 @@ namespace Lexer {
                 str += c;
                 c = next_char();
             } while (std::isdigit(c) || c == '.');
-            return Token(type, str);
+            return Token{type, str};
         }
         if (c == '\'') {
             std::string str = "";
@@ -58,7 +58,7 @@ namespace Lexer {
                 str += c;
             }
             c = next_char();
-            return Token(tok_string, str);
+            return Token{tok_string, str};
         }
         if (c == '#') {
             do {
@@ -68,7 +68,7 @@ namespace Lexer {
                 return get_tok();
             }
         }
-        if (c == EOF) return Token(tok_eof, "");
+        if (c == EOF) return Token{tok_eof, ""};
         char thischar = c;
         TokenType tok_type = tok_char;
         if (c == '+' || c == '-' || c == '/' || c == '*') {
@@ -77,6 +77,6 @@ namespace Lexer {
         }
         c = next_char();
         // TODO: account for the use of * in pointers
-        return Token(tok_type, std::string(1, thischar));
+        return Token{tok_type, std::string(1, thischar)};
     }
 } // Lexer

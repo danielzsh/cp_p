@@ -12,14 +12,10 @@ namespace Compiler {
         sym_char,
         sym_operator
     };
-    class Symbol {
-    public:
+    struct Symbol {
         int tok_count;
         SymbolType type;
         std::string value;
-        Symbol() {}
-        Symbol(int tok_count, SymbolType type, std::string value)
-        : tok_count(tok_count), type(type), value(value) {}
     };
     class Compiler {
     private:
@@ -28,6 +24,8 @@ namespace Compiler {
         std::string body;
         std::string compile_main(int pos);
         std::string compile_macro(int& pos);
+        std::string compile_struct(int& pos);
+        std::string compile_block(int& pos, int tabs);
         Symbol next_symbol(int pos);
     public:
         Compiler(std::string input);

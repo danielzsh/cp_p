@@ -328,25 +328,19 @@
 0 ans
 6 )
 top:
-0 1 1 define
-3 2 0 long long
-4 1 2 \n
-ending sym: 4 1 2 \n
+0 1 define
+after define: int
+ending sym: 4 2 \n
+final statement: #define int long long
+
 top:
-5 1 1 define
-10 1 6 (
-11 1 6 (
-12 1 3 x
-13 1 6 )
-14 1 7 *
-15 1 6 (
-16 1 3 x
-17 1 6 )
-18 1 6 )
-19 1 2 \n
-ending sym: 19 1 2 \n
+5 1 define
+after define: SQUARE(x)
+ending sym: 19 2 \n
+final statement: #define SQUARE(x) ((x) * (x))
+
 top:
-20 1 1 struct
+20 1 struct
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long

@@ -15,8 +15,7 @@ namespace Compiler {
         sym_start
     };
     struct Symbol {
-        int pos;
-        int tok_count;
+        int pos; // ending position of symbol
         SymbolType type;
         std::string value;
     };
@@ -28,9 +27,11 @@ namespace Compiler {
         std::string body;
         std::string compile_main(int pos);
         std::string compile_macro(Symbol& sym);
-        std::string compile_struct(int& pos);
-        std::string compile_block(int& pos, int tabs);
-        Symbol advance(Symbol& sym);
+        std::string compile_struct(Symbol& sym);
+        std::string compile_block(Symbol& sym, int tabs);
+        std::string compile_decl(Symbol& sym);
+        std::string copy_line(Symbol& sym);
+        Symbol& advance(Symbol& sym);
         Symbol peek(Symbol sym);
         Symbol next_symbol(int pos);
     public:

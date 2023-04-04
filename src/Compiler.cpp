@@ -32,7 +32,7 @@ namespace Compiler {
             }
             else break;
         }
-        return header + body;
+        return header + "\n" + body;
     }
 
     /// @brief compiles a macro

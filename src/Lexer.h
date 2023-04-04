@@ -1,7 +1,18 @@
 #pragma once
 #include <string>
 #include <vector>
-namespace Lexer {
+// TODO: consider refactoring to namespace vs. class?
+class Lexer {
+private:
+    Lexer(std::string input);
+    static char c;
+    static char next_char();
+    static std::string input;
+    static int pos;
+    static std::vector<std::string> keywords;
+    static std::vector<std::string> types;
+    static int line;
+public:
     enum TokenType {
         tok_identifier,
         tok_int,
@@ -14,28 +25,11 @@ namespace Lexer {
         tok_whitespace,
         tok_type
     };
-    
     struct Token {
         TokenType type;
         std::string value;
     };
-    std::ostream &operator<<(std::ostream &os, Token const &token);
-    class Lexer {
-    private:
-        char c = ' ';
-        char next_char();
-        std::string input = "";
-        int pos = -1;
-        std::vector<std::string> keywords =
-                {"input", "struct", "return", "define"};
-        std::vector<std::string> types =
-                {"int", "long"};
-        int line = 1;
-    public:
-        Lexer(std::string input);
-        std::vector<Token> lex();
-        Token get_tok();
-    };
-
-} // Lexer
-
+    static std::vector<Token> lex(std::string input);
+    static Token get_tok();
+};
+std::ostream &operator<<(std::ostream &os, Lexer::Token const &token);

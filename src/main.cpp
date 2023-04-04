@@ -15,9 +15,8 @@ int main(int argc, char** argv) {
     }
     if (argc > 1) input = readFile(argv[1]);
     // Lexer::Lexer lexer(input);
-    Compiler::Compiler compiler(input);
     try {
-        std::cout << compiler.compile();
+        std::cout << Compiler::compile(input);
         // auto tokens = lexer.lex();
         // for (auto token : tokens) std::cout << token << std::endl;
     } catch(std::string e) {

@@ -2,6 +2,8 @@ define int long long
 define SQUARE(x) ((x) * (x))
 struct grazing:
 	int x, y, t
+int square(int x): # maybe change syntax later
+	return x * x
 
 main():
 	input: int g n

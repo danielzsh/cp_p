@@ -329,19 +329,17 @@
 6 )
 top:
 0 1 define
-after define: int
-ending sym: 4 2 \n
-final statement: #define int long long
-
 top:
 5 1 define
-after define: SQUARE(x)
-ending sym: 19 2 \n
-final statement: #define SQUARE(x) ((x) * (x))
-
 top:
 20 1 struct
+variable declaration int
+top:
+35 6421832 main()
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
 #define SQUARE(x) ((x) * (x))
+struct grazing {
+	int x, y, t;
+};

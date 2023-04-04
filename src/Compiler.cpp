@@ -27,9 +27,9 @@ namespace Compiler {
             if (cur_sym.value == "define") { // #define statement
                 header += compile_macro(cur_sym);
             }
-            // else if (cur_sym.value == "struct") {
-            //     body += compile_struct(pos);
-            // }
+            else if (cur_sym.value == "struct") {
+                body += compile_struct(cur_sym);
+            }
             else break;
         }
         return header + body;
@@ -61,8 +61,8 @@ namespace Compiler {
         if (advance(sym).value != ":") {
             throw std::string("expected colon after " + struct_def + " declaration.");
         }
-        struct_def +=   "{\n" + \
-                            compile_block(advance(sym), 1) + \
+        struct_def +=   "{\n" +
+                            compile_block(advance(advance(sym)), 1) +
                         "};\n";
         return struct_def;
     }
@@ -79,7 +79,7 @@ namespace Compiler {
                 block += "\t";
                 advance(sym);
             }
-            compile_decl(sym);
+            block += compile_decl(sym);
             advance(sym);
         }
         return block;
@@ -91,7 +91,12 @@ namespace Compiler {
     std::string Compiler::compile_decl(Symbol& sym) {
         std::string decl = "";
         if (sym.type == sym_type) { // variable declaration
-            decl = sym.value + " " + copy_line(sym) + ";\n";
+            std::cout << "variable declaration " + sym.value << "\n";
+            decl = sym.value + " ";
+            decl += copy_line(advance(sym)) + ";\n";
+            // decl = sym.value + " " + copy_line(sym) + ";\n";
+            // ^ this doesn't work either
+            // i know c++ sucks
         }
         // TODO: add function declaration later
         return decl;
@@ -104,6 +109,7 @@ namespace Compiler {
         std::string line = "";
         while (sym.value != "\n") {
             if (sym.type == sym_operator) line += " " + sym.value + " ";
+            else if (sym.value == ",") line += sym.value + " ";
             else line += sym.value;
             advance(sym);
         }
